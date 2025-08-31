@@ -6,6 +6,7 @@ Al ejecutarlo, hace un ciclo que empieza a mostrar el precio actual recurrenteme
 tiene dos comando de uso, precione A para actualizar inmediatamente el precio, o B para detener el monitoreo.
 
 En este video te muestro un script en Batch súper práctico que consulta el libro de órdenes de Coinbase cada 5 segundos, obteniendo los precios ASK y BID de BTC/USDT directamente desde la API oficial.
+
 https://youtu.be/HkE3gZGPa0A
 
 👉 ¿Qué hace el script?
