@@ -1,20 +1,19 @@
-Este ejemplo es meramente educativo, para ayudarte a adquirir habilidades de automatización de la vieja escuela, aunque mas vigente que nunca.
+This example is purely educational, meant to help you build old-school automation skills — still more relevant than ever.
 
-Script de facil uso, funciona en cualquier windows, que tenga el comando curl y gawk en entorno, en caso no los tenga, 
-copielo de carpeta Herramientas, y dejelo en misma carpeta del fichero 'Monitor BTC-USDC Realtime.bat'.
-Al ejecutarlo, hace un ciclo que empieza a mostrar el precio actual recurrentemente en la consola,
-tiene dos comando de uso, precione A para actualizar inmediatamente el precio, o B para detener el monitoreo.
+Easy-to-use script, works on any Windows system that has the curl and gawk commands available in the environment. If you don’t have them, simply copy them from the Tools folder and place them in the same directory as the file "Monitor BTC-USDC Realtime.bat".
 
-En este video te muestro un script en Batch súper práctico que consulta el libro de órdenes de Coinbase cada 5 segundos, obteniendo los precios ASK y BID de BTC/USDT directamente desde la API oficial.
+When executed, it runs a loop that continuously displays the current price in the console. It has two simple commands: press A to update the price immediately, or B to stop the monitoring.
 
-https://youtu.be/HkE3gZGPa0A
+In this video, I’ll show you a super practical Batch script that queries the Coinbase order book every 5 seconds, fetching the ASK and BID prices of BTC/USDT directly from the official API.
 
-👉 ¿Qué hace el script?
-📊 Muestra en consola la evolución del precio con un histórico visible en tiempo real.
-💾 Guarda cada actualización en un fichero plano, ideal para análisis posteriores.
-⚡ Permite tener datos de mercado frescos cada 5 segundos, perfectos para cálculos de indicadores técnicos o incluso para implementar algoritmos de entrada y salida de compra/venta.
+🔗 https://youtu.be/HkE3gZGPa0A
 
-🔑 ¿Por qué es importante?
-En el mundo del trading, el tiempo real lo es todo. Contar con el precio más reciente del libro de órdenes te da una ventaja al momento de detectar oportunidades, validar señales y tomar decisiones más rápidas y seguras.
+👉 What does the script do?
+📊 Displays the price evolution in the console with a visible real-time history.
+💾 Saves each update into a flat file, perfect for later analysis.
+⚡ Provides fresh market data every 5 seconds — great for building technical indicators or even implementing buy/sell entry and exit algorithms.
 
-💡 Si te interesa el trading automatizado, los bots, las señales de compra/venta y quieres aprender cómo aprovechar datos de exchanges para tus propios cálculos, este video es para ti.
+🔑 Why is this important?
+In trading, real-time data is everything. Having access to the most up-to-date order book prices gives you an edge when spotting opportunities, validating signals, and making faster, smarter decisions.
+
+💡 If you’re interested in automated trading, bots, buy/sell signals, and want to learn how to leverage exchange data for your own strategies, this video is for you.
