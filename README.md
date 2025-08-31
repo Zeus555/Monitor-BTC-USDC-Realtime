@@ -16,4 +16,4 @@ In this video, I’ll show you a super practical Batch script that queries the C
 🔑 Why is this important?
 In trading, real-time data is everything. Having access to the most up-to-date order book prices gives you an edge when spotting opportunities, validating signals, and making faster, smarter decisions.
 
-💡 If you’re interested in automated trading, bots, buy/sell signals, and want to learn how to leverage exchange data for your own strategies, this video is for you.
+💡 If you’re interested in automated trading, bots, buy/sell signals, and want to learn how to leverage exchange data for your own strategies, this script is for you.
