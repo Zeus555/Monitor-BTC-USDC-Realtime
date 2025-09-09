@@ -3,6 +3,19 @@
 :: Seteamos ambiente para usar variables retrasadas.
 SETLOCAL ENABLEDELAYEDEXPANSION
 
+:: Directorios de trabajo.
+set DirRaiz=D:\PRC Monitor Price\
+set DirScript=%DirRaiz%Script\
+set DirTemporal=%DirRaiz%Temporal\
+set DirDatos=%DirRaiz%Datos\
+set DirLog=%DirRaiz%Log\
+
+:: Poner el titulo a la ventana.
+title Monitor BTC-USDT
+
+:: Servicio de base de datos.
+set DB=%DirDatos%MonitorPrice.db
+
 :: Obtenemos fecha y hora actual.
 call :ObtieneFecha
 
@@ -13,24 +26,35 @@ for /F %%a in ('echo prompt $E ^| cmd') do set "ESC=%%a"
 set /a ini=%Epoch%
 
 :: Inicio de ejecucion.
-echo [%YYYYMMDD_HH24_MI_SS%][BTC-USDT] ... Start.
+echo %YYYYMMDD_HH24_MI_SS% ... Start.
 
 :: Consultar a Coinbase los precios del libro de ordenes.
 :GetPrice
-for /F "tokens=1,4 delims=," %%a in ('curl -s https://api.exchange.coinbase.com/products/BTC-USDT/book?level^=1') do (
+for /F "tokens=1,4,10 delims=," %%a in ('curl -s https://api.exchange.coinbase.com/products/BTC-USDT/book?level^=1') do (
 	:: Obtener precio ASK y BID.
 	set ask_c=%%b
 	set bid_c=%%a
+	set time_c=%%c
 	:: Limpiar comillas dobles.
 	set "ask_c=!ask_c:"=!"
 	set "bid_c=!bid_c:"=!"
+	set "time_c=!time_c:":"=!"
+	set "time_c=!time_c:"=!"
 
 	:: Limpiar palabras y caracteres adicionales.
 	for %%k in ([ ] : { asks bids) do (
 		set "ask_c=!ask_c:%%k=!"
 		set "bid_c=!bid_c:%%k=!"
 	)
+	for %%k in (} time T Z) do set "time_c=!time_c:%%k= !"
 )
+
+rem echo ask:!ask_c! bid:!bid_c! time:!time_c!
+rem pause
+rem exit 0
+
+:: Guardar el precio en la base de datos.
+sqlite3 "%DB%" ".timeout 5000" "BEGIN TRANSACTION;insert into dwd_price(ask,bid,dateread) values (!ask_c!,!bid_c!,'!time_c!');COMMIT;"
 
 :: Formatear longitud decimal a 2 digitos.
 call :round !ask_c! 2 ask_c
@@ -41,12 +65,12 @@ call :UpdatePriceInFile
 
 :: Imprimir en pantalla.
 call :ObtieneFecha
-echo !ESC![90m[!YYYYMMDD_HH24_MI_SS!][BTC-USDT]!ESC![0m ... Coinbase . !ESC![91m!ask_c!!ESC![0m !ESC![92m!bid_c!!ESC![0m
+echo !ESC![90m!YYYYMMDD_HH24_MI_SS!!ESC![0m ... Coinbase . !ESC![91m!ask_c!!ESC![0m !ESC![92m!bid_c!!ESC![0m !ESC![93m!time_c!!ESC![0m
 
 :: Guardar al portapapeles.
-rem echo !YYYYMMDD_HH24_MI_SS![BTC-USDT] ... ask:!ask_c! bid:!bid_c!| clip
+echo ask: !ask_c!, bid: !bid_c!, timestamp: !time_c!| clip
 
-:: Se da opcion al usuario que presione una tecla A o B para evitar la espera de los 5 segundos o detener el monitoreo.
+:: Se da opcion al usuario que presione una tecla A o B para evitar la espera de los 15 segundos o detener el monitoreo.
 :: por defecto es la opcion A de obtener el precio una vez que termine el periodo de espera de 5 segundos.
 choice /C AB /N /T 5 /D A >Nul
 if !errorlevel! equ 1 (
@@ -62,7 +86,7 @@ if !errorlevel! equ 1 (
 call :ObtieneFecha
 set /a fin=%Epoch%
 set /a dif=!fin!-!ini!
-echo [!YYYYMMDD_HH24_MI_SS!][BTC-USDT] ... End ... Elapsed: !dif!s.
+echo !YYYYMMDD_HH24_MI_SS! ... End ... Elapsed: !dif!s.
 
 Exit 0
 
